@@ -1,6 +1,6 @@
 # Define the image argument and provide a default value
-# TODO - Change to sanctioned Python3 Image
-ARG IMAGE=python:3-slim-bookworm
+# TODO - Change to sanctioned RHEL image
+ARG IMAGE=ubuntu:24.04
 
 # Use the image as specified
 FROM ${IMAGE}
@@ -9,31 +9,17 @@ FROM ${IMAGE}
 ARG IMAGE
 
 # Update and upgrade the existing packages 
-RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends \
-    python3 \
-    python3-pip \
-    ninja-build \
-    libopenblas-dev \
-    build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/*
+RUN apt update && apt install libgomp1
 
 RUN mkdir /app
-WORKDIR /app
-COPY . /app
+COPY llama-server /app
+COPY run.sh /app
 
-RUN python3 -m pip install --upgrade pip
-
-RUN python3 -m pip install --upgrade pip pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context
-
-RUN pip install llama-cpp-python --verbose;
+VOLUME /models
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
 ENV PORT=8000
 
-# Expose a port for the server
-EXPOSE 8000
-
 # Run the server start script
-CMD ["/bin/sh", "/app/run.sh"]
+CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
