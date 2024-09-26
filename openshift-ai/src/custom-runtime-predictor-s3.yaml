@@ -1,0 +1,15 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: llamacpp
+spec:
+  predictor:
+    containers:
+      - name: llamacpp-container
+        image: <oci-name>
+        env:
+          - name: STORAGE_URI
+            value: <s3-location>
+        ports:
+          - containerPort: 8080
+            protocol: TCP
