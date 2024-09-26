@@ -15,7 +15,11 @@ RUN mkdir /app
 COPY llama-server /app
 COPY run.sh /app
 
-VOLUME /models
+# Copy the GGUF file in
+RUN mkdir /models
+COPY codellama-7b-instruct.Q2_K.gguf /models
+
+# VOLUME /models
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
