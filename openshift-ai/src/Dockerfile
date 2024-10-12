@@ -8,18 +8,23 @@ FROM ${IMAGE}
 # Re-declare the ARG after FROM
 ARG IMAGE
 
-# Update and upgrade the existing packages 
-RUN apt update && apt install libgomp1 curl -y
+# Update and upgrade the existing packages
+RUN apt update && apt install libgomp1 curl git -y
+
+# Install git lfs
+RUN curl -s https;//packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
+
+RUN git lfs install
 
 RUN mkdir /app
 COPY ./openshift-ai/src/llama-server /app
-# COPY run.sh /app
 
 # Copy the GGUF file in
 RUN mkdir /models
-RUN curl -O https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
-# RUN wget -O /models/codellama-7b-instruct.Q2_K.gguf https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
-RUN mv codellama-7b-instruct.Q2_K.gguf /models/
+WORKDIR /models
+RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
+    git lfs fetch --include="codellama-7b-instruct.Q2_K.gguf"
+
 
 # VOLUME /models
 
