@@ -12,7 +12,7 @@ ARG IMAGE
 RUN apt update && apt install libgomp1 curl git -y
 
 # Install git lfs
-RUN curl -s https;//packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
+RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
 
 RUN git lfs install
 
