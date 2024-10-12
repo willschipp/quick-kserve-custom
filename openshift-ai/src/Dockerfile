@@ -17,8 +17,9 @@ COPY ./openshift-ai/src/llama-server /app
 
 # Copy the GGUF file in
 RUN mkdir /models
-# RUN curl -o /models/codellama-7b-instruct.Q2_K.gguf https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
-RUN wget -O /models/codellama-7b-instruct.Q2_K.gguf https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
+RUN curl -O https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
+# RUN wget -O /models/codellama-7b-instruct.Q2_K.gguf https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true
+RUN mv codellama-7b-instruct.Q2_K.gguf /models/
 
 # VOLUME /models
 
