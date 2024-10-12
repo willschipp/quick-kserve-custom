@@ -13,7 +13,7 @@ RUN apt update && apt install libgomp1
 
 RUN mkdir /app
 COPY llama-server /app
-COPY run.sh /app
+# COPY run.sh /app
 
 # Copy the GGUF file in
 RUN mkdir /models
