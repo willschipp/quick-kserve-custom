@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/your-image-name:latest .
+        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest .
 
       - name: Push Docker image to Quay.io
-        run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/your-image-name:latest      
+        run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest      
