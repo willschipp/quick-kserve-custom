@@ -17,7 +17,7 @@ COPY run.sh /app
 
 # Copy the GGUF file in
 RUN mkdir /models
-COPY codellama-7b-instruct.Q2_K.gguf /models
+COPY --input https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q2_K.gguf?download=true /models
 
 # VOLUME /models
 
@@ -26,4 +26,4 @@ ENV HOST=0.0.0.0
 ENV PORT=8000
 
 # Run the server start script
-CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
+CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.ggu*","-c","512","--host","0.0.0.0","--port","8080"]
