@@ -9,7 +9,7 @@ FROM ${IMAGE}
 ARG IMAGE
 
 # Update and upgrade the existing packages 
-RUN apt update && apt install libgomp1
+RUN apt update && apt install libgomp1 curl -y
 
 RUN mkdir /app
 COPY ./openshift-ai/src/llama-server /app
