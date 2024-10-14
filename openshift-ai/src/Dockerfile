@@ -25,6 +25,8 @@ WORKDIR /models
 RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
     git lfs fetch --include="codellama-7b-instruct.Q2_K.gguf"
 
+# reset WORKDIR
+WORKDIR /
 
 # VOLUME /models
 
