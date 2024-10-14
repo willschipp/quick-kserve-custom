@@ -1,0 +1,35 @@
+name: Build Llama.cpp
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build in Docker container
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/workspace ubuntu:latest /bin/bash -c "
+            set -ex
+            apt-get update
+            apt-get install -y git make gcc build-essentials
+            cd /workspace
+            git clone https://github.com/ggerganov/llama.cpp.git
+            cd llama.cpp
+            make
+          "        
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary
+          path: llama.cpp/llama-server        
