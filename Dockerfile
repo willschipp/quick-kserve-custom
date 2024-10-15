@@ -16,9 +16,9 @@ RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.d
 
 RUN git lfs install
 
-RUN mkdir /app
-COPY llama-server /app/llama-server
-RUN chmod +x /app/llama-server
+# RUN mkdir /app
+COPY llama-server .
+RUN chmod +x llama-server
 
 # Copy the GGUF file in
 RUN mkdir /models
@@ -38,7 +38,7 @@ ENV LC_ALL=C.utf8
 
 HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
 
-ENTRYPOINT ["./app/llama-server"]
+ENTRYPOINT ["./llama-server"]
 
 # Run the server start script
 # CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
