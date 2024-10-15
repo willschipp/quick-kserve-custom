@@ -29,7 +29,7 @@ jobs:
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: llama.cpp
+          name: llama-server
           path: llama.cpp/llama-server 
 
 
@@ -51,7 +51,7 @@ jobs:
       - name: Download llama-cpp
         uses: actions/download-artifact@v4
         with:
-          name: llama.cpp
+          name: llama-server
 
       - name: Build Docker image
         run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest -f ./openshift-ai/src/Dockerfile .
