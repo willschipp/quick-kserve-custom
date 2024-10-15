@@ -54,7 +54,7 @@ jobs:
           name: llama-server
 
       - name: Build Docker image
-        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest -f ./openshift-ai/src/Dockerfile .
+        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest .
 
       - name: Push Docker image to Quay.io
         run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest      
