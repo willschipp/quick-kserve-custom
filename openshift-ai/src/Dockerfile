@@ -34,6 +34,12 @@ WORKDIR /
 # Set environment variable for the host
 ENV HOST=0.0.0.0
 ENV PORT=8000
+ENV LC_ALL=C.utf8
+
+HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
+
+ENTRYPOINT ["./app/llama-server"]
 
 # Run the server start script
-CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
+# CMD ["./app/llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
+CMD ["-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
