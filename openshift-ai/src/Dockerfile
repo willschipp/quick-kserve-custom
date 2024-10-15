@@ -17,7 +17,8 @@ RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.d
 RUN git lfs install
 
 RUN mkdir /app
-COPY ./openshift-ai/src/llama-server /app
+#COPY ./openshift-ai/src/llama-server /app
+COPY llama.cpp /app/llama-server
 
 # Copy the GGUF file in
 RUN mkdir /models
