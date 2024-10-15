@@ -18,6 +18,7 @@ RUN git lfs install
 
 RUN mkdir /app
 COPY llama-server /app/llama-server
+RUN chmod +x /app/llama-server
 
 # Copy the GGUF file in
 RUN mkdir /models
@@ -32,7 +33,7 @@ WORKDIR /
 
 # Set environment variable for the host
 ENV HOST=0.0.0.0
-ENV PORT=8000
+ENV PORT=8080
 ENV LC_ALL=C.utf8
 
 HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
