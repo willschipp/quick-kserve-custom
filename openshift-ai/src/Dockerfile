@@ -18,7 +18,7 @@ RUN git lfs install
 
 RUN mkdir /app
 #COPY ./openshift-ai/src/llama-server /app
-COPY llama.cpp /app/llama-server
+COPY ./llama.cpp /app/llama-server
 
 # Copy the GGUF file in
 RUN mkdir /models
