@@ -33,7 +33,7 @@ jobs:
           path: llama.cpp/llama-server 
 
 
-  build-iamge:
+  build-image:
     needs: build-llamacpp
     runs-on: ubuntu-latest
 
