@@ -36,7 +36,7 @@ ENV HOST=0.0.0.0
 ENV PORT=8080
 ENV LC_ALL=C.utf8
 
-HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
+# HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
 
 ENTRYPOINT ["./llama-server","-m", "/models/codellama-7b-instruct.Q2_K.gguf","-c","512","--host","0.0.0.0","--port","8080"]
 
