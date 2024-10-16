@@ -16,17 +16,23 @@ RUN make -j$(nproc) llama-server
 
 FROM ubuntu:$UBUNTU_VERSION AS runtime
 
-RUN apt-get update && \
-    apt-get install -y libcurl4-openssl-dev libgomp1 curl
-
 COPY --from=build /app/llama-server /llama-server
 
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
+#flattening RUN commands
+RUN apt-get update && \
+    apt-get install -y libcurl4-openssl-dev libgomp1 curl && \
+    curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs && \
+    git lfs install && \
+    mkdir /models
 
-RUN git lfs install
 
-RUN mkdir /models
+# RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
+
+# RUN git lfs install
+
+# RUN mkdir /models
 WORKDIR /models
+
 RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
     git lfs pull --include="codellama-7b-instruct.Q2_K.gguf"
 
