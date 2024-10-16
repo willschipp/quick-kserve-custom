@@ -4,37 +4,8 @@ on:
   workflow_dispatch:
       
 jobs:
-  build-llamacpp:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build in Docker container
-        run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace ubuntu:latest /bin/bash -c "
-            set -ex
-            apt-get update
-            apt-get install -y git make gcc build-essential
-            cd /workspace
-            git clone https://github.com/ggerganov/llama.cpp.git
-            cd llama.cpp
-            make
-          "        
-
-      - name: Upload binary artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: llama-server
-          path: llama.cpp/llama-server 
-
-
+  
   build-image:
-    needs: build-llamacpp
     runs-on: ubuntu-latest
 
     steps:
@@ -48,13 +19,8 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
-      - name: Download llama-cpp
-        uses: actions/download-artifact@v4
-        with:
-          name: llama-server
-
       - name: Build Docker image
-        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest .
+        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest -f Merged.Dockerfile .
 
       - name: Push Docker image to Quay.io
         run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/model_work:latest      
