@@ -20,10 +20,11 @@ COPY --from=build /app/llama-server /llama-server
 
 #flattening RUN commands
 RUN apt-get update && \
-    apt-get install -y libcurl4-openssl-dev libgomp1 curl && \
+    apt-get install -y libcurl4-openssl-dev libgomp1 curl python3-pip && \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs && \
     git lfs install && \
-    mkdir /models
+    mkdir /models && \
+    pip3 install huggingface-hub
 
 
 # RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash && apt-get install -y git-lfs
@@ -33,8 +34,9 @@ RUN apt-get update && \
 # RUN mkdir /models
 WORKDIR /models
 
-RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
-    git lfs pull --include="codellama-7b-instruct.Q2_K.gguf"
+#RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
+#    git lfs pull --include="codellama-7b-instruct.Q2_K.gguf"
+RUN huggingface-cli download TheBloke/CodeLlama-7B-Instruct-GGUF codellama-7b-instruct.Q2_K.gguf --local-dir . --local-dir-use-symlinks False
 
 ENV LC_ALL=C.utf8
 # Must be set to 0.0.0.0 so it can listen to requests from host machine
