@@ -34,7 +34,7 @@ RUN apt-get update && \
 WORKDIR /models
 
 RUN git clone --no-checkout --depth 1 https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF . && \
-    git lfs fetch --include="codellama-7b-instruct.Q2_K.gguf"
+    git lfs pull --include="codellama-7b-instruct.Q2_K.gguf"
 
 ENV LC_ALL=C.utf8
 # Must be set to 0.0.0.0 so it can listen to requests from host machine
