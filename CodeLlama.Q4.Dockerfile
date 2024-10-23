@@ -31,7 +31,7 @@ RUN apt-get update && \
 WORKDIR /models
 
 # get the model
-RUN huggingface-cli download TheBloke/CodeLlama-7B-Instruct-GGUF codellama-7b-instruct.Q4_0.gguf --local-dir . --local-dir-use-symlinks False
+RUN huggingface-cli download TheBloke/CodeLlama-7B-Instruct-GGUF codellama-7b-instruct.Q4_K_M.gguf --local-dir . --local-dir-use-symlinks False
 
 ENV LC_ALL=C.utf8
 # Must be set to 0.0.0.0 so it can listen to requests from host machine
@@ -41,4 +41,4 @@ HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
 
 ENTRYPOINT [ "/llama-server" ]
 
-CMD ["-m", "/models/codellama-7b-instruct.Q4_0.gguf","-n","256","--host","0.0.0.0","--port","8080"]
+CMD ["-m", "/models/codellama-7b-instruct.Q4_K_M.gguf","-n","2048","--host","0.0.0.0","--port","8080"]
