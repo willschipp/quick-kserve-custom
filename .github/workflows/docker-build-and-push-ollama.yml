@@ -20,7 +20,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:q4 -f Ollama.Dockerfile .
+        run: docker build -t quay.io/${{ secrets.QUAY_USERNAME }}/model_work:ollama -f Ollama.Dockerfile .
 
       - name: Push Docker image to Quay.io
-        run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/model_work:q4
+        run: docker push quay.io/${{ secrets.QUAY_USERNAME }}/model_work:ollama
