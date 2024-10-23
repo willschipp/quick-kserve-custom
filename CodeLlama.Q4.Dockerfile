@@ -41,4 +41,4 @@ HEALTHCHECK CMD [ "curl", "-f", "http://localhost:8080/health" ]
 
 ENTRYPOINT [ "/llama-server" ]
 
-CMD ["-m", "/models/codellama-7b-instruct.Q4_0.gguf","-n","512","--host","0.0.0.0","--port","8080"]
+CMD ["-m", "/models/codellama-7b-instruct.Q4_0.gguf","--host","0.0.0.0","--port","8080"]
